@@ -1,3 +1,3 @@
-This is a simple demo REST app writen in Java spring boot. It uses in-memory dataset to demonstrate resources and basic manipulation of resources such as GET and POST.
+This is a simple demo REST app writen in Java Spring Boot. It uses in-memory dataset to demonstrate resources and basic manipulation with resources. In order to use it, you will need maven.
 
-It requires maven and you can use bin/run.sh to run the app.
+You can run it with ```bin/run.sh```.
