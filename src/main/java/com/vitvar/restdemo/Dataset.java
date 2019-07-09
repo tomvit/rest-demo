@@ -44,7 +44,7 @@ public class Dataset {
     public static Student getStudent(String id) {
         Student student=students.get(id);
         if (student==null)
-            throw new Exceptions.ResorceNotFoundException(String.format("Student with id %s does not exist!", id));
+            throw new Exceptions.ResourceNotFoundException(String.format("Student with id %s does not exist!", id));
         return student;
     }
 
