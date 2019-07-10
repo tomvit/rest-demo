@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+        <style type="text/css">
+            .main.container {
+                margin-top: 2em;
+            }
+        </style>
+
+        <script>
+            var app = angular.module('demoRest', []);
+            app.controller('studentsCtrl', ($scope, $http) => {
+                $scope.reloadStudents = function ()  {
+                    $http.get("/data/students/")
+                        .then((response)=>{
+                            $scope.students = response.data;
+                            $scope.apply();
+                        });
+                }
+
+                $scope.removeStudent = function (student) {
+                    $http.delete(student.link.href)
+                        .then(()=>{
+                            $scope.reloadStudents();
+                        })
+                }
+
+                $scope.editStudent = function (student) {
+                    $.each(student, function(name, val){
+                        var $el = $('#studentForm input[name="'+name+'"]');
+                        $el.val(val);
+                    });
+
+                    $('#studentForm button[type="submit"]').click(()=>{
+                        alert('submitted!');
+                    })
+
+                    $('#studentForm').modal('show');
+                }
+
+                $scope.reset = function () {
+                    $http.post("/data/reset")
+                        .then(()=>{
+                            $scope.reloadStudents();
+                        })
+                }
+
+                $scope.reloadStudents();
+            });
+
+
+        </script>
+    </head>
+
+    <body>
+
+        <div class="ui main container" ng-app="demoRest" ng-controller="studentsCtrl">
+
+            <button class="ui right floated button" ng-click="reset()">Reset</button>
+
+            <h1 class="ui header">Demo REST App</h1>
+
+            <table class="ui very compact table">
+                <thead>
+                <tr><th>ID</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="student in students">
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.city }}</td>
+                    <td>
+                        <button class="ui compact icon button" ng-click="editStudent(student)">
+                            <i class="edit icon"></i>
+                        </button>
+                        <button class="ui compact icon button" ng-click="removeStudent(student)">
+                            <i class="times circle outline icon"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- modal dialog -->
+        <div class="ui small modal" id="studentForm">
+            <!--<div class="header">-->
+            <!--Student-->
+            <!--</div>-->
+            <div class="content">
+                <form class="ui form">
+                    <div class="field">
+                        <label>ID</label>
+                        <input type="text" name="id" placeholder="ID">
+                    </div>
+                    <div class="field">
+                        <label>Name</label>
+                        <input type="text" name="name" placeholder="Name">
+                    </div>
+                    <div class="field">
+                        <label>City</label>
+                        <input type="text" name="city" placeholder="City">
+                    </div>
+                    <button class="ui button" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>

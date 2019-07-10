@@ -16,7 +16,11 @@ public class Dataset {
     private static Map<String, Student> students = new HashMap();
 
     static {
-        // populate some test data
+        reset();
+    }
+
+    public static void reset() {
+        students.clear();
         try {
             addStudent(new Student("1", "Tomas Petricek", "Liberec"));
             addStudent(new Student("2", "David Sverma", "Tel Aviv"));
@@ -46,6 +50,13 @@ public class Dataset {
         if (student==null)
             throw new Exceptions.ResourceNotFoundException(String.format("Student with id %s does not exist!", id));
         return student;
+    }
+
+    public static void removeStudent(String id) {
+        Student student=students.get(id);
+        if (student==null)
+            throw new Exceptions.ResourceNotFoundException(String.format("Student with id %s does not exist!", id));
+        students.remove(id);
     }
 
 }

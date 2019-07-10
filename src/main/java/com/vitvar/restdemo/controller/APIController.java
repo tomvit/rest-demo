@@ -6,12 +6,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/data")
 public class APIController {
 
+
+    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    @ResponseBody
+    public void reset() {
+        Dataset.reset();
+    }
 
     @RequestMapping(value = "/students", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
@@ -23,6 +30,12 @@ public class APIController {
     @ResponseBody
     public Student getStudent(@PathVariable String id) {
         return Dataset.getStudent(id);
+    }
+
+    @RequestMapping(value = "/students/{id}/", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void removeStudent(@PathVariable String id) {
+        Dataset.removeStudent(id);
     }
 
     @RequestMapping(value = "/students/", method = RequestMethod.POST)

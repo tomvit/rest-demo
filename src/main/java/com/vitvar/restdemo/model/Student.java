@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 import java.util.stream.Collectors;
 
 public class Student {
-    @JsonProperty(value = "id", required = true)
+    @JsonProperty(value = "id")
     public String id;
 
-    @JsonProperty(value = "name", required = true)
+    @JsonProperty(value = "name")
     public String name;
 
-    @JsonProperty(value = "city", required = true)
+    @JsonProperty(value = "city")
     public String city;
 
     public AtomLink link;
@@ -29,7 +29,7 @@ public class Student {
     @JsonView()
     public AtomLink link() {
         if (link==null)
-            link=new AtomLink("self", "/students/" + this.id + "/");
+            link=new AtomLink("self", "/data/students/" + this.id + "/");
         return link;
     }
 
