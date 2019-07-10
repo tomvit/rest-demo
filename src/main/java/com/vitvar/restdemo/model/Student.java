@@ -3,11 +3,11 @@ package com.vitvar.restdemo.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 
-import java.util.stream.Collectors;
-
 public class Student {
+    private static int counter = 1;
+
     @JsonProperty(value = "id")
-    public String id;
+    public int id;
 
     @JsonProperty(value = "name")
     public String name;
@@ -20,10 +20,18 @@ public class Student {
     public Student() {
     }
 
-    public Student(String id, String name, String city) {
+    public Student(int id) {
         this.id=id;
+    }
+
+    public Student(String name, String city) {
+        this.id=Student.generateId();
         this.name=name;
         this.city=city;
+    }
+
+    public int id() {
+        return id;
     }
 
     @JsonView()
@@ -31,6 +39,16 @@ public class Student {
         if (link==null)
             link=new AtomLink("self", "/data/students/" + this.id + "/");
         return link;
+    }
+
+    public Student update(Student s) {
+        this.name = s.name;
+        this.city = s.city;
+        return this;
+    }
+
+    public static int generateId() {
+        return Student.counter++;
     }
 
 

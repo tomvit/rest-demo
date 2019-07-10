@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component("dataset")
 @Configuration
 public class Dataset {
-    private static Map<String, Student> students = new HashMap();
+    private static Map<Integer, Student> students = new HashMap();
 
     static {
         reset();
@@ -21,18 +21,18 @@ public class Dataset {
 
     public static void reset() {
         students.clear();
-        try {
-            addStudent(new Student("1", "Tomas Petricek", "Liberec"));
-            addStudent(new Student("2", "David Sverma", "Tel Aviv"));
-            addStudent(new Student("3", "Petr Machacek", "Gablonz"));
-        } catch (Exceptions.DataException e) {}
+        addStudent(new Student("Tomas Petricek", "Liberec"));
+        addStudent(new Student("David Sverma", "Tel Aviv"));
+        addStudent(new Student("Petr Machacek", "Gablonz"));
     }
 
     public static void addStudent(Student student) {
-        if (Dataset.students.get(student.id)==null)
-            Dataset.students.put(student.id, student);
-        else
-            throw new Exceptions.DataException(String.format("Student with id %s already exists!", student.id));
+        Dataset.students.put(student.id(), student);
+    }
+
+    public static void createStudent(Student student) {
+        Student s = new Student(Student.generateId()).update(student);
+        Dataset.students.put(s.id(), s);
     }
 
     public static Collection<Student> allStudents(String name) {
@@ -45,18 +45,25 @@ public class Dataset {
             return students.values();
     }
 
-    public static Student getStudent(String id) {
+    public static Student getStudent(int id) {
         Student student=students.get(id);
         if (student==null)
             throw new Exceptions.ResourceNotFoundException(String.format("Student with id %s does not exist!", id));
         return student;
     }
 
-    public static void removeStudent(String id) {
+    public static void removeStudent(int id) {
         Student student=students.get(id);
         if (student==null)
             throw new Exceptions.ResourceNotFoundException(String.format("Student with id %s does not exist!", id));
         students.remove(id);
+    }
+
+    public static void updateStudent(int id, Student student) {
+        Student s = getStudent(id);
+        if (s==null)
+            throw new Exceptions.ResourceNotFoundException(String.format("Student with id %s does not exist!", id));
+        s.update(student);
     }
 
 }

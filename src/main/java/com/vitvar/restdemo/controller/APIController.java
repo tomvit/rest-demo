@@ -28,20 +28,26 @@ public class APIController {
 
     @RequestMapping(value = "/students/{id}", method = RequestMethod.GET, produces="application/json")
     @ResponseBody
-    public Student getStudent(@PathVariable String id) {
+    public Student getStudent(@PathVariable int id) {
         return Dataset.getStudent(id);
     }
 
     @RequestMapping(value = "/students/{id}/", method = RequestMethod.DELETE)
     @ResponseBody
-    public void removeStudent(@PathVariable String id) {
+    public void removeStudent(@PathVariable int id) {
         Dataset.removeStudent(id);
+    }
+
+    @RequestMapping(value = "/students/{id}/", method = RequestMethod.PUT)
+    @ResponseBody
+    public void updateStudent(@PathVariable int id, @RequestBody Student student) {
+        Dataset.updateStudent(id, student);
     }
 
     @RequestMapping(value = "/students/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void createStudent(@RequestBody Student student, HttpServletResponse resp) {
-        Dataset.addStudent(student);
+        Dataset.createStudent(student);
         resp.addHeader("Location", student.link().href());
     }
 
