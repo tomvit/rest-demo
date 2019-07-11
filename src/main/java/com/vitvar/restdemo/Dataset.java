@@ -8,15 +8,18 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component("dataset")
 @Configuration
 public class Dataset {
-    private static Map<Integer, Student> students = new HashMap();
-
+    public static Map<Integer, Student> students = new ConcurrentHashMap();
+    private static final Thread poller = new Thread(new WeatherPoller(), "weatherpoller");
+    
     static {
         reset();
+        poller.start();
     }
 
     public static void reset() {
