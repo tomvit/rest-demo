@@ -12,7 +12,7 @@ You will need maven to run the application. You can run it as follows:
 3. Run ```bin/run.sh```.
 4. Access the app at http://localhost:8080
 
-Alternatically, if you do not have maven installed locally and you use Docker, you can run the application as follows. The container uses maven [Java 8 image](https://hub.docker.com/_/maven).
+Alternatically, if you do not have maven installed locally and you use Docker, you can run the application as follows. The container uses [Maven Java 8 image](https://hub.docker.com/_/maven).
 
 1. Go to the ```bin``` directory 
 2. Run ```docker-compose up -d```. 
