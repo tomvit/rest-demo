@@ -27,11 +27,9 @@ public class WeatherPoller implements Runnable {
        try {
            ObjectMapper mapper = new ObjectMapper();
            String key = System.getProperty(WeatherPoller.OPENWEATHER_KEY);
-           if (key == null || key.equals(""))
-               key = System.getenv(WeatherPoller.OPENWEATHER_KEY);
            if (key == null || key.equals("")) {
                Logger.getLogger(WeatherPoller.class.getName()).log(Level.SEVERE,
-                       String.format("Cannot start the weather poller as the system property or environment variable %s was not defined. Please set this variable before running this service.",
+                       String.format("Cannot start the weather poller as the system property %s was not set. Please set this variable before running this service.",
                                WeatherPoller.OPENWEATHER_KEY));
                return;
            }

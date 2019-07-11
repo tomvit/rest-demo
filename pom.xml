@@ -55,6 +55,12 @@
 				</executions>
 				<configuration>
 					<mainClass>com.vitvar.restdemo.RestDemoApplication</mainClass>
+					<systemProperties>
+            					<systemProperty>
+              						<key>OPENWEATHER_KEY</key>
+              						<value>${env.OPENWEATHER_KEY}</value>
+            					</systemProperty>                
+					</systemProperties>
 				</configuration>
 			</plugin>
 		</plugins>
