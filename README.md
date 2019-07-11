@@ -1,8 +1,7 @@
 # REST DEMO
 REST demo is a simple application which aim is to demonstrate basic capabilities of REST as well as client-side Javascript programming when accessing REST API. The application is being used throughout the Middleware and Web Services and Web 2.0 courses at the Czech Technical University in Prague.
 
-# Technologies
-The application is implemented in Java Spring Boot, defines a simple in-memory dataset and a REST model in Java, and uses Semantic UI and Angular JS for user interaction. In order to demonstrate a third-party Web API access from Spring Boot, it uses OpenWeather API to retrieve a temperature 
+The application is implemented in Java Spring Boot, defines a simple in-memory dataset and a REST model in Java, and uses Semantic UI and Angular JS for user interaction. In order to demonstrate a third-party Web API access from Spring Boot, it uses OpenWeather API to retrieve a temperature for a given city.
 
 # Running
 
