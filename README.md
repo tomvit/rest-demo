@@ -8,7 +8,7 @@ The application is implemented in Java Spring Boot, defines a simple in-memory d
 You will need maven to run the application. You can run it as follows:
 
 1. If you want to use data from OpenWeather API, you will need to create OpenWeather API key.
-2. Store the key in a file APIKEY in the root directory of the app.
+2. Export the key in a file APIKEY in the root directory of the app ```export OPENWEATHER_KEY=<your_key>```.
 3. Run ```bin/run.sh```.
 
 You can also use docker container and in the ```bin``` directory run ```docker-compose up -d```. The container uses maven Java 8 image.
