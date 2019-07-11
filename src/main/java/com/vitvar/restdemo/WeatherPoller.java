@@ -20,23 +20,34 @@ import java.util.logging.Logger;
  */
 public class WeatherPoller implements Runnable {
 
+    private static final String OPENWEATHER_KEY="OPENWEATHER_KEY";
+
     @Override
     public void run() {
        try {
            ObjectMapper mapper = new ObjectMapper();
-           
+           String key = System.getProperty(WeatherPoller.OPENWEATHER_KEY);
+           if (key == null || key.equals(""))
+               key = System.getenv(WeatherPoller.OPENWEATHER_KEY);
+           if (key == null || key.equals("")) {
+               Logger.getLogger(WeatherPoller.class.getName()).log(Level.SEVERE,
+                       String.format("Cannot start the weather poller as the system property or environment variable %s was not defined. Please set this variable before running this service.",
+                               WeatherPoller.OPENWEATHER_KEY));
+               return;
+           }
+
             while (!Thread.interrupted()) {
                 for (Student s : Dataset.students.values()) {
                     if (s.updated() != -1 && (s.temperature() == null || System.currentTimeMillis() > s.updated() + 60000*10)) {
                         try {
                             Weather weather = mapper.readValue(
-                                    new URL(String.format("http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=7f287db307710658223306394cfa1714", s.city)), 
+                                    new URL(String.format("http://api.openweathermap.org/data/2.5/weather?q=%s&units=metric&appid=%s", s.city, key)),
                                     Weather.class);
                             s.setTemperature(weather.measurements.get("temp"));
                             s.setUpdated(System.currentTimeMillis());
                         } catch (FileNotFoundException ex) {
                             s.setTemperature(null);
-                            s.setUpdated(-1);                            
+                            s.setUpdated(-1);
                         } catch (IOException ex) {
                             Logger.getLogger(WeatherPoller.class.getName()).log(Level.SEVERE, "Error occured when retrieving weather data.", ex);
                         }
@@ -44,6 +55,7 @@ public class WeatherPoller implements Runnable {
                 }
                 Thread.sleep(10000);
             }
+
        } catch (InterruptedException e) {
            // do nothing;
        }
