@@ -3,7 +3,7 @@ REST demo is a simple application which aim is to demonstrate basic capabilities
 
 The application is implemented in [Java Spring Boot](https://spring.io/projects/spring-boot), defines a simple in-memory dataset and a REST model in Java, and uses [Semantic UI](https://semantic-ui.com/) and [AngularJS](https://angularjs.org/) for user interaction. In order to demonstrate a third-party Web API access from Spring Boot, it uses OpenWeather API to retrieve a temperature for a given city.
 
-# Running
+## Running
 
 You will need maven to run the application. You can run it as follows:
 
